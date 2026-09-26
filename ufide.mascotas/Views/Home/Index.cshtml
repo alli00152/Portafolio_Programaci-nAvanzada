@@ -1,0 +1,112 @@
+﻿@model ufide.mascotas.Models.ViewModels.MascotaViewModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<main>
+    <h2>Lista de Mascotas</h2>
+    @if (Model.Mascotas.Any())
+    {
+        <table class="tabla-mascotas">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Especie</th>
+                    <th>Mes</th>
+                    <th>Año</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (var i = 0; i < Model.Mascotas.Count(); i++)
+                {
+                    var mascota = Model.Mascotas[i];
+
+                    <tr>
+                        <td>@(i + 1)</td>
+                        <td>@mascota.Nombre</td>
+                        <td>@mascota.TipoEspecie.ToString()</td>
+                        <td>@mascota.MesNacimiento.ToString()</td>
+                        <td>@mascota.AnioNacimiento.ToString()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    <hr />
+
+    <h2>Agregar Mascota</h2>
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    @using (Html.BeginForm("Index", "Home",
+        FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TipoEspecie,
+                     new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.TipoEspecie,
+                         Model.Especies,
+                         "Seleccione una especie",
+                         new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TipoEspecie, "",
+                         new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nombre,
+                     new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MesNacimiento,
+                     new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.MesNacimiento,
+                         Model.Meses,
+                         "Seleccione un mes",
+                         new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MesNacimiento, "",
+                         new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AnioNacimiento,
+                     new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.AnioNacimiento,
+                         Model.Anios,
+                         "Seleccione un año",
+                         new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AnioNacimiento, "",
+                         new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-primary">Agregar Mascota</button>
+            </div>
+        </div>
+    }
+</main>

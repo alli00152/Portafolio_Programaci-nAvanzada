@@ -1,0 +1,52 @@
+﻿/* Set padding to keep content from hitting the edges */
+.body-content {
+    margin-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* Estilos de la tabla de mascotas */
+.tabla-mascotas {
+    width: 100%;
+    max-width: 700px;
+    border-collapse: collapse;
+    margin: 15px 0 25px 0;
+    font-family: inherit;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+    .tabla-mascotas thead th {
+        background-color: #337ab7;
+        color: #ffffff;
+        text-align: left;
+        padding: 10px 12px;
+        border: 1px solid #2e6da4;
+    }
+
+    .tabla-mascotas tbody td {
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+    }
+
+    .tabla-mascotas tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .tabla-mascotas tbody tr:hover {
+        background-color: #d9edf7;
+        transition: background-color 0.2s ease-in-out;
+    }
