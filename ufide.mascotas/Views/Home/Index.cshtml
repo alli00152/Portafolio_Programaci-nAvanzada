@@ -1,25 +1,51 @@
-﻿@model ufide.mascotas.Models.ViewModels.MascotaViewModel
+﻿@model ufide.mascotas.Models.ViewModels.MascotaListaViewModel
 
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Mascotas registradas";
 }
 
 <main>
-    <h2>Lista de Mascotas</h2>
+    <div class="row mt-3">
+        <div class="col-md-8">
+            <h2>Mascotas registradas</h2>
+            <p class="text-muted mb-0">@ViewBag.Subtitulo</p>
+            <small>Consulta: @ViewData["FechaConsulta"]</small>
+        </div>
+        <div class="col-md-4 text-end">
+            @Html.ActionLink("Registrar mascota", "Registrar", "Home", null, new { @class = "btn btn-primary" })
+        </div>
+    </div>
+
+    @* Filtro por período de nacimiento: usa el Model Binder personalizado *@
+    @using (Html.BeginForm("Buscar", "Home", FormMethod.Get, new { @class = "row g-2 my-3" }))
+    {
+        <div class="col-auto">
+            <input type="number" name="mes" class="form-control" placeholder="Mes (1-12)" min="1" max="12" />
+        </div>
+        <div class="col-auto">
+            <input type="number" name="anio" class="form-control" placeholder="Año" />
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-outline-secondary">Buscar por período</button>
+            @Html.ActionLink("Ver todas", "Index", "Home", null, new { @class = "btn btn-link" })
+        </div>
+    }
+
     @if (Model.Mascotas.Any())
     {
-        <table class="tabla-mascotas">
+        <table class="table table-striped table-hover">
             <thead>
                 <tr>
                     <th>#</th>
                     <th>Nombre</th>
                     <th>Especie</th>
-                    <th>Mes</th>
-                    <th>Año</th>
+                    <th>Tipo</th>
+                    <th>Nacimiento</th>
+                    <th>&nbsp;</th>
                 </tr>
             </thead>
             <tbody>
-                @for (var i = 0; i < Model.Mascotas.Count(); i++)
+                @for (var i = 0; i < Model.Mascotas.Count; i++)
                 {
                     var mascota = Model.Mascotas[i];
 
@@ -27,86 +53,24 @@
                         <td>@(i + 1)</td>
                         <td>@mascota.Nombre</td>
                         <td>@mascota.TipoEspecie.ToString()</td>
-                        <td>@mascota.MesNacimiento.ToString()</td>
-                        <td>@mascota.AnioNacimiento.ToString()</td>
+                        <td>@mascota.Tipo</td>
+                        <td>@mascota.FechaNacimiento.ToString("MMMM yyyy")</td>
+                        <td>
+                            @Html.ActionLink("Ver detalle", "Detalle", "Home", new { id = mascota.Id }, new { @class = "btn btn-outline-primary btn-sm" })
+                        </td>
                     </tr>
                 }
             </tbody>
         </table>
     }
-
-    <hr />
-
-    <h2>Agregar Mascota</h2>
-
-    @if (TempData["ErrorMessage"] != null)
+    else
     {
-        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+        <div class="alert alert-info">No hay mascotas registradas.</div>
     }
 
-    @if (TempData["SuccessMessage"] != null)
-    {
-        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
-    }
-
-    @using (Html.BeginForm("Index", "Home",
-        FormMethod.Post, new { @class = "form-horizontal" }))
-    {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TipoEspecie,
-                     new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.TipoEspecie,
-                         Model.Especies,
-                         "Seleccione una especie",
-                         new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.TipoEspecie, "",
-                         new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Nombre,
-                     new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MesNacimiento,
-                     new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.MesNacimiento,
-                         Model.Meses,
-                         "Seleccione un mes",
-                         new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MesNacimiento, "",
-                         new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.AnioNacimiento,
-                     new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.AnioNacimiento,
-                         Model.Anios,
-                         "Seleccione un año",
-                         new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.AnioNacimiento, "",
-                         new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <button type="submit" class="btn btn-primary">Agregar Mascota</button>
-            </div>
-        </div>
-    }
+    <p>
+        @Html.ActionLink("Estado del servicio", "Estado", "Home", null, new { @class = "btn btn-info" })
+        @Html.ActionLink("Descargar lista CSV", "DescargarLista", "Home", null, new { @class = "btn btn-success" })
+        @Html.ActionLink("Ir al inicio", "IrAInicio", "Home", null, new { @class = "btn btn-secondary" })
+    </p>
 </main>

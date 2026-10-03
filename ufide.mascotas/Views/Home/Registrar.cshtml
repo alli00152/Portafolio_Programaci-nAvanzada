@@ -1,0 +1,73 @@
+﻿@model ufide.mascotas.Models.ViewModels.MascotaViewModel
+
+@{
+    ViewBag.Title = "Registrar mascota";
+}
+
+<main>
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    <div class="row mt-3">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h4 mb-0">Registrar mascota</h2>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("Registrar", "Home", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="mb-3">
+                            @Html.LabelFor(model => model.TipoEspecie, "Especie", new { @class = "form-label" })
+                            @Html.DropDownListFor(model => model.TipoEspecie,
+                                Model.Especies,
+                                "Seleccione una especie",
+                                new { @class = "form-select" })
+                            @Html.ValidationMessageFor(model => model.TipoEspecie, "", new { @class = "text-danger" })
+                            <div class="form-text">
+                                CANINO registra PERRO, FELINO registra GATO, REPTIL registra TORTUGA.
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            @Html.LabelFor(model => model.Nombre, new { @class = "form-label" })
+                            @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                @Html.LabelFor(model => model.MesNacimiento, "Mes de nacimiento", new { @class = "form-label" })
+                                @Html.DropDownListFor(model => model.MesNacimiento,
+                                    Model.Meses,
+                                    "Seleccione un mes",
+                                    new { @class = "form-select" })
+                                @Html.ValidationMessageFor(model => model.MesNacimiento, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                @Html.LabelFor(model => model.AnioNacimiento, "Año de nacimiento", new { @class = "form-label" })
+                                @Html.DropDownListFor(model => model.AnioNacimiento,
+                                    Model.Anios,
+                                    "Seleccione un año",
+                                    new { @class = "form-select" })
+                                @Html.ValidationMessageFor(model => model.AnioNacimiento, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Agregar mascota</button>
+                        @Html.ActionLink("Cancelar", "Index", "Home", null, new { @class = "btn btn-link" })
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

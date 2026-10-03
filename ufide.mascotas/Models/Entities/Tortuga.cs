@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace ufide.mascotas.Models.Entities
+﻿namespace ufide.mascotas.Models.Entities
 {
-    public class Tortuga : Mascota
+    // sealed: el diseño decide que no habrá subclases más específicas de Tortuga
+    public sealed class Tortuga : Mascota
     {
         public Tortuga(
             string nombre,
@@ -19,6 +15,11 @@ namespace ufide.mascotas.Models.Entities
                   )
         {
 
+        }
+
+        public override string Tipo
+        {
+            get { return "TORTUGA"; }
         }
 
         public override string Describir()

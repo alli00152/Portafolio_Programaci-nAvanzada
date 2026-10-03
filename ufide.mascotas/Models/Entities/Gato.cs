@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace ufide.mascotas.Models.Entities
+﻿namespace ufide.mascotas.Models.Entities
 {
     public class Gato : Mascota
     {
@@ -19,6 +14,11 @@ namespace ufide.mascotas.Models.Entities
                   )
         {
 
+        }
+
+        public override string Tipo
+        {
+            get { return "GATO"; }
         }
 
         public override string Describir()

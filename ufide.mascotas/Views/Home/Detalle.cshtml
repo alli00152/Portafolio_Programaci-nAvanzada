@@ -1,0 +1,53 @@
+﻿@model ufide.mascotas.Models.ViewModels.MascotaDetalleViewModel
+
+@{
+    ViewBag.Title = "Detalle de mascota";
+}
+
+<main>
+    @* TempData: el mensaje viene del POST de Registrar y se lee una sola vez *@
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success mt-3">@TempData["SuccessMessage"]</div>
+    }
+
+    <div class="row mt-3">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h4 mb-0">@Model.Mascota.Nombre</h2>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">@Model.MensajeEstado</p>
+                    <dl class="row">
+                        <dt class="col-sm-4">Id</dt>
+                        <dd class="col-sm-8">@Model.Mascota.Id</dd>
+                        <dt class="col-sm-4">Especie</dt>
+                        <dd class="col-sm-8">@Model.Mascota.TipoEspecie</dd>
+                        <dt class="col-sm-4">Tipo</dt>
+                        <dd class="col-sm-8">@Model.Mascota.Tipo</dd>
+                        <dt class="col-sm-4">Nacimiento</dt>
+                        <dd class="col-sm-8">@Model.Mascota.FechaNacimiento.ToString("MMMM yyyy")</dd>
+                        <dt class="col-sm-4">Vacuna antirrábica</dt>
+                        <dd class="col-sm-8">
+                            @if (Model.Mascota.FichaVacunacion.TieneVacunaAntirrabica)
+                            {
+                                <span>Sí (última: @Model.Mascota.FichaVacunacion.FechaUltimaVacuna.Value.ToString("dd/MM/yyyy"))</span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">Sin registro de vacunación</span>
+                            }
+                        </dd>
+                    </dl>
+                    @* Polimorfismo: cada subclase responde distinto a Describir() *@
+                    <p class="fst-italic">@Model.Mascota.Describir()</p>
+                </div>
+                <div class="card-footer">
+                    @Html.ActionLink("Volver a la lista", "Index", "Home", null, new { @class = "btn btn-secondary" })
+                    @Html.ActionLink("Registrar otra", "Registrar", "Home", null, new { @class = "btn btn-primary" })
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

@@ -1,13 +1,9 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Error</title>
-</head>
-<body>
-    <hgroup>
-        <h1>Error.</h1>
-        <h2>An error occurred while processing your request.</h2>
-    </hgroup>
-</body>
-</html>
+﻿@{
+    ViewBag.Title = "Ocurrió un error";
+}
+
+<div class="alert alert-danger mt-3">
+    <h2>No fue posible completar la solicitud.</h2>
+    <p>Intente nuevamente. Si el problema continúa, contacte al administrador.</p>
+    @Html.ActionLink("Volver a la lista", "Index", "Home", null, new { @class = "btn btn-secondary" })
+</div>

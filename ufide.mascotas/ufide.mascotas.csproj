@@ -133,16 +133,26 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Binders\PeriodoNacimientoBinder.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Gato.cs" />
+    <Compile Include="Models\Entities\FabricaCanina.cs" />
+    <Compile Include="Models\Entities\FabricaFelina.cs" />
+    <Compile Include="Models\Entities\FabricaReptil.cs" />
+    <Compile Include="Models\Entities\FichaVacunacion.cs" />
+    <Compile Include="Models\Entities\IFabricaMascotas.cs" />
     <Compile Include="Models\Entities\Mascota.cs" />
+    <Compile Include="Models\Entities\MascotaFactory.cs" />
     <Compile Include="Models\Entities\Perro.cs" />
     <Compile Include="Models\Entities\TipoEspecie.cs" />
     <Compile Include="Models\Entities\Tortuga.cs" />
     <Compile Include="Models\ViewModels\MascotaViewModel.cs" />
+    <Compile Include="Models\ViewModels\MascotaDetalleViewModel.cs" />
+    <Compile Include="Models\ViewModels\MascotaListaViewModel.cs" />
+    <Compile Include="Models\ViewModels\PeriodoNacimiento.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -194,6 +204,8 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Registrar.cshtml" />
+    <Content Include="Views\Home\Detalle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
